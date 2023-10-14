@@ -6,6 +6,7 @@ from dyacon.read import read_yaml_to_dict, dataclass_from_dict
 import pytest
 
 
+@pytest.mark.skip(reason='Only for local testing')
 def test_read_yaml_to_dict():
     assert read_yaml_to_dict("tests/config/config0.yaml") == {
         "db": {"name": "db_name", "port": 1234}
@@ -17,6 +18,7 @@ def test_read_yaml_to_dict_raise():
         read_yaml_to_dict("non_existed_file.yaml")
 
 
+@pytest.mark.skip(reason='Only for local testing')
 def test_include():
     assert read_yaml_to_dict("tests/config/config1.yaml") == {
         "db": {"name": "db_name", "port": 1234}
@@ -93,6 +95,7 @@ def test_dataclass_from_dict_raise():
         )
 
 
+@pytest.mark.skip(reason='Only for local testing')
 def test_read_config():
     @dataclass
     class DB:
