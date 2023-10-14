@@ -15,7 +15,7 @@ def read_config(klass: Type[T], path: str = 'config/config.yaml') -> T:
 
 
 def read_yaml_to_dict(path: str = 'config/config.yaml') -> Dict:
-    # TODO: add exception for non-dict structures?
+    # TODO: add exception or warning for non-dict structures?
     config_abs_path = find_dotenv(path)
     if not config_abs_path:
         raise ValueError('Config yaml file not found')
@@ -32,26 +32,26 @@ def read_yaml_to_dict(path: str = 'config/config.yaml') -> Dict:
 
     Loader.add_constructor('!include', Loader.include)
 
-    with open(
-        config_abs_path,
-        'r',
-    ) as f:
+    with open(config_abs_path, 'r') as f:
         config_dict: Dict = yaml.load(f, Loader=Loader)
     return config_dict
 
 
 def dataclass_from_dict(klass: Type[T], d: Dict) -> T:
-    # TODO: add exceptions or warnings for container types
+    # TODO: add exceptions or warnings for container types&
     #  they work, but descriptor loaders.loaders.Load() is not working for
-    #  items of list may be I should use dacite lib, idk, but it looks
+    #  items of list
+    #  may be I should use dacite lib, idk, but it looks
     #  overcomplicated in configuration context
+    #  #
     #  example of config.yaml:
     #  field: "${PATH}" # Load() is working, value of env var PATH will be here
     #  lst:
     #    - key: "${secret1}" # Load() is not working
     #    - "${secret2}" # Load() is not working
+    #  #
     #  result will be just yaml values without loading from env:
-    #  {"lst": [{"key": "secret1"}, "secret2"]}
+    #  {"field": <PATH value>, "lst": [{"key": "${secret1}"}, "${secret2}"]}
     try:
         field_types = {field.name: field.type for field in fields(klass)}
         key_value = {}
