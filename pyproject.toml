@@ -1,6 +1,6 @@
 [project]
 name = "dyacon"
-version = "0.0.1"
+version = "0.0.2"
 authors = [{ name = "Aleksei Morozov", email = "morozov6420@gmail.com" }]
 description = "Yaml config package"
 readme = "README.md"
@@ -21,3 +21,6 @@ google = ["google-cloud-secret-manager"]
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[project.urls]
+"Homepage" = "https://github.com/morozov6420/dyacon"
