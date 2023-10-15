@@ -1,1 +1,1 @@
-Package for reading yaml configuration files..
+Package for reading yaml configuration files.
