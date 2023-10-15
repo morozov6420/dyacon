@@ -2,8 +2,6 @@ name: Publish to Test PyPI
 
 on:
   push:
-    branches:
-      - develop
     tags:
       - 'test-v*'
 
