@@ -9,10 +9,11 @@ logger = logging.getLogger(__name__)
 
 
 try:
-    SecretManagerServiceClient = __import__(
-        'google.cloud.secretmanager.SecretManagerServiceClient'
+    google = __import__('google.cloud.secretmanager')
+    SecretManagerServiceClient = (
+        google.cloud.secretmanager.SecretManagerServiceClient
     )
-    NotFound = __import__('google.api_core.exceptions.NotFound')
+    NotFound = google.api_core.exceptions.NotFound
 except ImportError:
     SecretManagerServiceClient = None
     NotFound = None
