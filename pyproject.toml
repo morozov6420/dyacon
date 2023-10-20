@@ -1,6 +1,6 @@
 [project]
 name = "dyacon"
-version = "0.0.4"
+version = "0.0.5"
 authors = [{ name = "Aleksei Morozov", email = "morozov6420@gmail.com" }]
 description = "Yaml config package"
 readme = "README.md"
