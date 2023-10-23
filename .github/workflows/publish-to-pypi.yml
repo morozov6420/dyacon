@@ -35,8 +35,8 @@ jobs:
           python -m pip install ".[lint]"
 
       - name: Run lint
-          - run: |
-            black --check .
+        run: |
+          black --check .
 
       - name: Build and publish to PyPI
         run: |
