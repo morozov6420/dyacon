@@ -16,6 +16,7 @@ dependencies = ["python-dotenv", "pyyaml"]
 [project.optional-dependencies]
 test = ["pytest"]
 google = ["google-cloud-secret-manager"]
+lint = ["black"]
 
 
 [build-system]
@@ -24,3 +25,7 @@ build-backend = "setuptools.build_meta"
 
 [project.urls]
 "Homepage" = "https://github.com/morozov6420/dyacon"
+
+[tool.black]
+line-length = 79
+skip-string-normalization = 1
