@@ -1,7 +1,7 @@
 import os
 import re
 from abc import ABC, abstractmethod
-from typing import List, Optional, Pattern
+from typing import List, Optional, Pattern, Callable, Any
 
 
 class Loader(ABC):
@@ -15,6 +15,7 @@ class Loader(ABC):
         raise NotImplementedError
 
 
+# fmt: off
 ENV_LOADER_PATTERN = re.compile(
     r'\${'
     r'(?P<name>[^}^{:]+)'
@@ -22,6 +23,7 @@ ENV_LOADER_PATTERN = re.compile(
     r'(?P<default>.*?)'
     r'}'
 )
+# fmt: on
 
 
 class EnvLoader(Loader):
@@ -57,8 +59,18 @@ class EnvLoader(Loader):
 
 
 class Load:
-    def __init__(self, loaders: Optional[List[Loader]] = None) -> None:
+    def __init__(
+        self,
+        loaders: Optional[List[Loader]] = None,
+        *,
+        default: Optional[str] = None,
+        default_factory: Optional[Callable[[], Any]] = None,
+        required: bool = False,
+    ) -> None:
         self.loaders = [EnvLoader()]
+        self.required = required
+        self.default = default
+        self.default_factory = default_factory
         if loaders:
             self.loaders.extend(loaders)
 
@@ -77,4 +89,12 @@ class Load:
         return instance.__dict__[self.name]
 
     def __set__(self, instance, value):
-        instance.__dict__[self.name] = self.load(value)
+        if self is not value:
+            instance.__dict__[self.name] = self.load(value)
+        else:
+            if self.required:
+                raise ValueError(f'{self.name} field cannot be empty')
+            if self.default_factory:
+                instance.__dict__[self.name] = self.default_factory()
+            else:
+                instance.__dict__[self.name] = self.default

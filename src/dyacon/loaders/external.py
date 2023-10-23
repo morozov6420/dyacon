@@ -4,7 +4,6 @@ from typing import List, Optional, Pattern
 
 from .loaders import Loader, Load
 
-
 logger = logging.getLogger(__name__)
 
 
