@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import List
 
+import pytest
 from dyacon import read_config
 from dyacon.read import read_yaml_to_dict, dataclass_from_dict
-import pytest
 
 
 @pytest.mark.skip(reason='Only for local testing')
