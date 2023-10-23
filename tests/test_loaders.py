@@ -3,8 +3,8 @@ from unittest.mock import patch
 
 import pytest
 from dyacon import Load
-from dyacon.read import dataclass_from_dict
 from dyacon.loaders.external import GoogleLoad, SecretManagerServiceClient
+from dyacon.read import dataclass_from_dict
 
 
 def test_env_loader():
