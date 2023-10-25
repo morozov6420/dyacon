@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 from dyacon import Load
-from dyacon.loaders.external import GoogleLoad, SecretManagerServiceClient
+from dyacon.loaders.external import GoogleCloudSecretsLoad, SecretManagerServiceClient
 from dyacon.read import dataclass_from_dict
 
 
@@ -67,7 +67,7 @@ def test_env_loader_several_groups():
 def test_google_loader_default():
     @dataclass
     class Config:
-        key1: str = GoogleLoad()
+        key1: str = GoogleCloudSecretsLoad()
 
     config_dict = {'key1': '!{secret_name:project_id:default}'}
 
@@ -84,7 +84,7 @@ def test_google_loader_default():
 def test_google_loader_without_default():
     @dataclass
     class Config:
-        key1: str = GoogleLoad()
+        key1: str = GoogleCloudSecretsLoad()
 
     config_dict = {'key1': '!{secret_name:project_id}'}
 
