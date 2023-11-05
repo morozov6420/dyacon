@@ -95,9 +95,3 @@ class GoogleCloudSecretLoader(Loader):
                 f'{config_content[span_max:]}'
             )
         return config_content
-
-
-class GoogleLoad(Load):
-    def __init__(self, loaders: Optional[List[Loader]] = None) -> None:
-        super().__init__(loaders)
-        self.loaders.append(GoogleCloudSecretLoader())

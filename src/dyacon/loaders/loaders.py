@@ -59,6 +59,28 @@ class EnvLoader(Loader):
 
 
 class Load:
+    """
+    for extending just inherit from this class and override __init__ method
+    or use lambda function
+    examples:
+    >>> MyLoad1 = lambda: Load(loaders=[MyLoader()])
+    >>> class MyLoad2(Load):
+    ...     def __init__(
+    ...          self,
+    ...          loaders: Optional[List[Loader]] = None,
+    ...          *,
+    ...          default: Optional[str] = None,
+    ...          default_factory: Optional[Callable[[], Any]] = None,
+    ...          required: bool = False,
+    ...      ) -> None:
+    ...          super().__init__(
+    ...              loaders,
+    ...              default=default,
+    ...              default_factory=default_factory,
+    ...              required=required,
+    ...          )
+    ...          self.loaders.append(MyLoader())  # <-- here is your new loader
+    """
     def __init__(
         self,
         loaders: Optional[List[Loader]] = None,
