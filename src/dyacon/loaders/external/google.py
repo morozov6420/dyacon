@@ -1,3 +1,4 @@
+import importlib
 import logging
 import re
 from typing import List, Optional, Pattern
@@ -8,11 +9,10 @@ logger = logging.getLogger(__name__)
 
 
 try:
-    google = __import__('google.cloud.secretmanager')
-    SecretManagerServiceClient = (
-        google.cloud.secretmanager.SecretManagerServiceClient
-    )
-    NotFound = google.api_core.exceptions.NotFound
+    secretmanager = importlib.import_module('google.cloud.secretmanager')
+    SecretManagerServiceClient = secretmanager.SecretManagerServiceClient
+    exceptions = importlib.import_module('google.api_core.exceptions')
+    NotFound = exceptions.NotFound
 except ImportError:
     SecretManagerServiceClient = None
     NotFound = None
