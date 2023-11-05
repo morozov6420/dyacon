@@ -81,6 +81,7 @@ class Load:
     ...          )
     ...          self.loaders.append(MyLoader())  # <-- here is your new loader
     """
+
     def __init__(
         self,
         loaders: Optional[List[Loader]] = None,
