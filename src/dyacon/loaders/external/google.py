@@ -1,18 +1,18 @@
+import importlib
 import logging
 import re
-from typing import List, Optional, Pattern
+from typing import Optional, Pattern
 
-from .loaders import Loader, Load
+from ..loaders import Loader
 
 logger = logging.getLogger(__name__)
 
 
 try:
-    google = __import__('google.cloud.secretmanager')
-    SecretManagerServiceClient = (
-        google.cloud.secretmanager.SecretManagerServiceClient
-    )
-    NotFound = google.api_core.exceptions.NotFound
+    secretmanager = importlib.import_module('google.cloud.secretmanager')
+    SecretManagerServiceClient = secretmanager.SecretManagerServiceClient
+    exceptions = importlib.import_module('google.api_core.exceptions')
+    NotFound = exceptions.NotFound
 except ImportError:
     SecretManagerServiceClient = None
     NotFound = None
@@ -46,7 +46,7 @@ def get_google_cloud_secret(
     return None
 
 
-GOOGLE_LOADER_PATTERN = re.compile(
+GOOGLE_CLOUD_SECRET_LOADER_PATTERN = re.compile(
     r'!{'
     r'(?P<name>[^}^{:]+)'
     r'(?P<first_separator>:?)'
@@ -57,9 +57,9 @@ GOOGLE_LOADER_PATTERN = re.compile(
 )
 
 
-class GoogleLoader(Loader):
+class GoogleCloudSecretLoader(Loader):
     def __init__(self) -> None:
-        self._pattern = GOOGLE_LOADER_PATTERN
+        self._pattern = GOOGLE_CLOUD_SECRET_LOADER_PATTERN
 
     @property
     def pattern(self) -> Pattern[str]:
@@ -95,9 +95,3 @@ class GoogleLoader(Loader):
                 f'{config_content[span_max:]}'
             )
         return config_content
-
-
-class GoogleLoad(Load):
-    def __init__(self, loaders: Optional[List[Loader]] = None) -> None:
-        super().__init__(loaders)
-        self.loaders.append(GoogleLoader())
