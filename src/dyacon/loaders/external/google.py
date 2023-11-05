@@ -2,7 +2,7 @@ import logging
 import re
 from typing import List, Optional, Pattern
 
-from .loaders import Loader, Load
+from ..loaders import Loader, Load
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +46,7 @@ def get_google_cloud_secret(
     return None
 
 
-GOOGLE_LOADER_PATTERN = re.compile(
+GOOGLE_CLOUD_SECRET_LOADER_PATTERN = re.compile(
     r'!{'
     r'(?P<name>[^}^{:]+)'
     r'(?P<first_separator>:?)'
@@ -57,9 +57,9 @@ GOOGLE_LOADER_PATTERN = re.compile(
 )
 
 
-class GoogleLoader(Loader):
+class GoogleCloudSecretLoader(Loader):
     def __init__(self) -> None:
-        self._pattern = GOOGLE_LOADER_PATTERN
+        self._pattern = GOOGLE_CLOUD_SECRET_LOADER_PATTERN
 
     @property
     def pattern(self) -> Pattern[str]:
@@ -100,4 +100,4 @@ class GoogleLoader(Loader):
 class GoogleLoad(Load):
     def __init__(self, loaders: Optional[List[Loader]] = None) -> None:
         super().__init__(loaders)
-        self.loaders.append(GoogleLoader())
+        self.loaders.append(GoogleCloudSecretLoader())
