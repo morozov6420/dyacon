@@ -1,9 +1,9 @@
 import importlib
 import logging
 import re
-from typing import List, Optional, Pattern
+from typing import Optional, Pattern
 
-from ..loaders import Loader, Load
+from ..loaders import Loader
 
 logger = logging.getLogger(__name__)
 
