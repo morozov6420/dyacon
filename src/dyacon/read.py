@@ -17,8 +17,8 @@ def read_config(klass: Type[T], path: str = 'config/config.yaml') -> T:
 def read_yaml_to_dict(path: str = 'config/config.yaml') -> Dict:
     # TODO: add exception or warning for non-dict structures?
     config_abs_path = find_dotenv(path)
-    if not config_abs_path:
-        raise ValueError('Config yaml file not found')
+    if not config_abs_path and not os.path.isfile(path):
+        raise ValueError(f'Config yaml file not found on path: {path}')
 
     class Loader(yaml.SafeLoader):
         def __init__(self, stream):
@@ -32,7 +32,7 @@ def read_yaml_to_dict(path: str = 'config/config.yaml') -> Dict:
 
     Loader.add_constructor('!include', Loader.include)
 
-    with open(config_abs_path, 'r') as f:
+    with open(config_abs_path or path, 'r') as f:
         config_dict: Dict = yaml.load(f, Loader=Loader)
     return config_dict
 
