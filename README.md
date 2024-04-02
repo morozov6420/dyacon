@@ -44,10 +44,10 @@ The Dyacon library is designed to simplify working with YAML configurations in y
   config = read_config(Config)
   ```
 
-- **Loading Values from Google Secret Manager**: If you work in the Google Cloud, Dyacon provides a loader for Google Secret Manager. You can load confidential data such as passwords and keys from Secret Manager using the syntax `${env_variable_name:project_id:default_value}`.
+- **Loading Values from Google Secret Manager**: If you work in the Google Cloud, Dyacon provides a loader for Google Secret Manager. You can load confidential data such as passwords and keys from Secret Manager using the syntax `!{env_variable_name:project_id:default_value}`.
   ```yaml
   # config/config.yaml
-  token: "${API_TOKEN:my-project:default_value}" 
+  token: "!{API_TOKEN:my-project:default_value}" 
   ```
 
   ```python

@@ -44,10 +44,10 @@ pip install "dyacon[google]"
   config = read_config(Config)
   ```
 
-- **Загрузка значений из Google Secret Manager**: Если вы работаете в облаке Google Cloud, Dyacon предоставляет загрузчик для Google Secret Manager. Вы можете загружать конфиденциальные данные, такие как пароли и ключи, из Secret Manager с использованием синтаксиса `${env_variable_name:project_id:default_value}`.
+- **Загрузка значений из Google Secret Manager**: Если вы работаете в облаке Google Cloud, Dyacon предоставляет загрузчик для Google Secret Manager. Вы можете загружать конфиденциальные данные, такие как пароли и ключи, из Secret Manager с использованием синтаксиса `!{env_variable_name:project_id:default_value}`.
   ```yaml
   # config/config.yaml
-  token: "${API_TOKEN:my-project:default_value}" 
+  token: "!{API_TOKEN:my-project:default_value}" 
   ```
 
   ```python
